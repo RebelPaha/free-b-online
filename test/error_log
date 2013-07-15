@@ -1,0 +1,20 @@
+[30-Apr-2013 09:19:06 Europe/Helsinki] PHP Warning:  file_get_contents(https://oauth.vk.com/access_token?client_id=APP_ID&amp;client_secret=APP_SECRET&amp;code=588958fb071bfaaf65a&amp;redirect_uri=REDIRECT_URI&amp;) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 401 Unauthorized
+ in /home/freebcom/public_html/test/vk.php on line 4
+[30-Apr-2013 09:20:52 Europe/Helsinki] PHP Warning:  file_get_contents(https://oauth.vk.com/access_token?client_id=3613917&amp;client_secret=gK8YJalhHbMn9mq5ZTbL&amp;code=21b42875bf724f2692a&amp;redirect_uri=REDIRECT_URI&amp;) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 400 Bad Request
+ in /home/freebcom/public_html/test/vk.php on line 4
+[30-Apr-2013 09:45:51 Europe/Helsinki] PHP Warning:  file_get_contents(https://oauth.vk.com/access_token?client_id=3613917&amp;client_secret=gK8YJalhHbMn9mq5ZTbL&amp;code=cc6ad9bda06900ce58&amp;redirect_uri=http://test.free-b.com.ua/vk.php) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 400 Bad Request
+ in /home/freebcom/public_html/test/vk.php on line 6
+[30-Apr-2013 09:49:32 Europe/Helsinki] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/freebcom/public_html/test/vk.php on line 7
+[30-Apr-2013 09:52:20 Europe/Helsinki] PHP Warning:  file_get_contents(https://oauth.vk.com/access_token?client_id=3613917&amp;client_secret=gK8YJalhHbMn9mq5ZTbL&amp;code=a6e11972ce64fba993&amp;redirect_uri=http://test.free-b.com.ua/vk.php) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 400 Bad Request
+ in /home/freebcom/public_html/test/vk.php on line 6
+[30-Apr-2013 10:15:28 Europe/Helsinki] PHP Parse error:  syntax error, unexpected ')' in /home/freebcom/public_html/test/vk.php on line 21
+[30-Apr-2013 10:16:03 Europe/Helsinki] PHP Parse error:  syntax error, unexpected T_VARIABLE, expecting T_FUNCTION in /home/freebcom/public_html/test/vk.php on line 32
+[30-Apr-2013 10:17:35 Europe/Helsinki] PHP Fatal error:  Cannot use object of type stdClass as array in /home/freebcom/public_html/test/vk.php on line 23
+[30-Apr-2013 10:19:39 Europe/Helsinki] PHP Fatal error:  Cannot use object of type stdClass as array in /home/freebcom/public_html/test/vk.php on line 22
+[30-Apr-2013 10:21:33 Europe/Helsinki] PHP Warning:  file_get_contents(https://oauth.vk.com/access_token?client_id=3613917&amp;client_secret=gK8YJalhHbMn9mq5ZTbL&amp;code=54453ffca24ba5c2c0&amp;redirect_uri=http://test.free-b.com.ua/vk.php) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 400 Bad Request
+ in /home/freebcom/public_html/test/vk.php on line 21
+[30-Apr-2013 10:21:44 Europe/Helsinki] PHP Fatal error:  Cannot use object of type stdClass as array in /home/freebcom/public_html/test/vk.php on line 22
+[30-Apr-2013 10:22:41 Europe/Helsinki] PHP Warning:  file_get_contents(https://oauth.vk.com/access_token?client_id=3613917&amp;client_secret=gK8YJalhHbMn9mq5ZTbL&amp;code=01fe40dc5307755ea7&amp;redirect_uri=http://test.free-b.com.ua/vk.php) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 400 Bad Request
+ in /home/freebcom/public_html/test/vk.php on line 21
+[30-Apr-2013 10:45:58 Europe/Helsinki] PHP Parse error:  syntax error, unexpected '=' in /home/freebcom/public_html/test/vk.php on line 42
+[30-Apr-2013 10:46:33 Europe/Helsinki] PHP Parse error:  syntax error, unexpected '=', expecting ')' in /home/freebcom/public_html/test/vk.php on line 56

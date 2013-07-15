@@ -1,0 +1,1 @@
+<?$result = mysql_query( "SELECT * FROM page WHERE menu='1' ORDER BY position ASC", $db );while( $row = mysql_fetch_row( $result ) ){    if( $row[ 0 ] == 1 ){        ?><a href="/" class="list"><? echo $row[ 1 ]; ?></a><?    }    else{        ?><a href="/page/<?php echo $row[ 0 ]; ?>" class="list"><? echo $row[ 1 ]; ?></a><?    }}?><div class="share42init"></div>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<meta http-equiv="expires" content="0">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+function start_upload()
+{
+		alert("start upload");
+    		var formData = new FormData($('form')[0]);
+    		$.ajax(
+    			{
+        		url: 'php/upload.php',
+        		type: 'POST',
+        		xhr: function() 
+        			{ 
+        			myXhr = $.ajaxSettings.xhr();
+            	if(myXhr.upload)
+            		{ 
+            		$('body').append("<div id=\"progress_bar_div\"><img src=\"img/wait.gif\"></div>");
+                	}
+            	return myXhr;
+        			},
+        		success: completeHandler,
+        		data: formData,
+        		cache: false,
+        		contentType: false,
+        		processData: false
+    			});
+}
+	
+function completeHandler() 
+{
+	$('#progress_bar_div').remove();	
+}	
+</script>
+
+</head>
+<body>
+
+<form enctype="multipart/form-data">
+	<table>
+		<tr>
+			<td><label>Лого вендора: </label></td><td><input name="logox350" type="file" onchange="javascript:start_upload();"/></td>
+		</tr>
+	</table>
+</form>
+<div id="logo_result">
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+#submit
+{
+width: 105px;
+background-color: #fa8080;
+padding: 5px;
+box-shadow: 5px 5px 5px #a05050;
+cursor: pointer;
+}
+
+#submit:hover
+{
+	background-color: #ff8080;
+	box-shadow: 5px 5px 5px #f05050;
+}
+
+#result a
+{
+	padding: 10px;
+}

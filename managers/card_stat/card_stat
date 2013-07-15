@@ -1,0 +1,171 @@
+	<table id="card_stat">
+					<tbody>
+						<tr>
+							<td>дата</td>
+							<td>Номер карты:</td>
+							<td>Cумма:</td>
+						</tr>
+						<tr>
+							<td>20.05.2012</td>
+							<td>99056789</td>
+							<td>189.67</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>99052389</td>
+							<td>1233.33</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>93512808</td>
+							<td>12342</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>99056232</td>
+							<td>12347</td>
+						</tr>
+						<tr>
+							<td>21.05.2012</td>
+							<td>99056789</td>
+							<td>189.67</td>
+						</tr>
+							<tr>
+							<td>Общая сумма</td>
+							<td></td>
+							<td>20023</td>
+						</tr>
+					</tbody>
+				</table>		
+				
+				
+/*	var stat = 	{
+							0: {
+								date:"20.04.2012",
+								0: {
+									time: "17-56-48",
+							card: "99756789",
+							price: 2700
+							},
+						1: {
+							time: "14-12-45",
+							card: "99712345",
+							price: 1986
+							}
+						},
+					1: {
+						date:"21.04.2012",
+						0:	{
+							time: "12-17-45",
+							card: "99754332",
+							price: 2048
+							}
+						}
+				};*/
+				
+				
+				
+				function submit_login_window()
+	 {
+	 	 $.ajax({type:'POST', url: 'php/index.php',dataType : "json", data:$('#login_form').serialize(), success: 
+	 	 	function(response) 
+	 	 			{
+        			if(response.login)
+        				{
+        					$("#lock_screen").css("visibility","hidden");
+        					$("#login_form").hide(200);
+        					fill_data();
+        				}
+        			else 
+        				{
+        				 alert("Неправильный логин/пароль");
+        				}
+    				}
+    			});
+		return false;
+	 }
+
+ $(document).ready(function() {
+ 	
+//part 1. getting vendors names 
+
+var vendors = {};
+				  
+$.ajax({type:'POST', url: 'php/index.php',dataType : "json", data:"get_card_ven_data=1", success: 
+	 	 		function(response) 
+	 	 			{
+	 	 			 vendors = response; 
+	 	 			 alert(response);				  
+					//part 2. creating @stat table with vendor names  			
+					var table = $('<table></table>').attr('id','stat');
+					for(var i in vendors)
+						{
+		 				var row = $('<tr></tr>');
+  						var name_col = $('<td></td>').attr('id','name_col');
+  						var stat_col = $('<td></td>').attr('id','stat_col');  
+						name_col.html(vendors[i]);
+						//there might be stat_col table;
+						//part 3. getting data to specific vendor (i) in xml or json
+						var stat={};
+						$.ajax({type:'POST', url: 'php/index.php',dataType : "json", data:"get_card_stat_data=1", success: 
+	 	 						function(response) 
+	 	 							{
+	 	 			 				stat = response;
+	 	 			 						//part 4 create table
+		 							var stat_table = $('<table></table>').attr('id','card_stat');
+		 							var price_per_period = 0;
+		 							stat_table.html("<tr><td>Дата</td><td>Карта</td><td>Сумма</td>");	
+									for( var i in stat)
+										{
+										var price_per_day = 0;
+										for(var info in stat[i])
+											{		
+											if(info!="date")
+												{
+												price_per_day+=stat[i][info].price;
+												var stat_row = $('<tr></tr>');
+												var stat_date_col = $('<td></td>').append(stat[i].date);
+												stat[i].date="";
+												stat_row.append(stat_date_col);
+												var stat_card_col = $('<td></td>').append(stat[i][info].card);
+												var stat_price_col = $('<td></td>').append(stat[i][info].price);
+												stat_row.append(stat_card_col);
+												stat_row.append(stat_price_col);
+												stat_table.append(stat_row);
+												}
+											}	
+										price_per_period+=price_per_day;
+										stat_table.append("<tr style='background-color: #9edca7;'><td>Сумма за день</td><td></td><td>"+price_per_day+"</td></tr>");
+										stat_table.append("<tr><td></td><td></td><td></td></tr>");
+										}
+									stat_table.append("<tr style='background-color: #dcda9e;'><td>Сумма за весь период</td><td></td><td>"+price_per_period+"</td></tr>");
+									stat_col.html(stat_table);
+									row.append(name_col);
+  									row.append(stat_col);
+  									//part 5. put it together
+  									table.append(row);    
+  									$("#main").append(table);		
+									}
+	 	 						});				  
+	 	 				 }
+	 	 			 }
+	 	 	});				  
+	
+var trig=false;
+   	$("#stat #name_col").click(function () 
+   			{
+   				$(this).parent().children("#stat_col").toggle(400);
+   				if(trig)
+   					{
+   						$(this).css("backgroundImage","url(img/show.png)");
+   						trig=false;
+   					}
+   				else 
+   					{
+   					$(this).css("backgroundImage","url(img/hide.png)");
+   					trig=true;
+						}
+   				
+   			});
+			
+ });

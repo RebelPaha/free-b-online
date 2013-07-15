@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<div id="login_by">
+<h2>Авторизация по:</h2>
+<form>
+	<table summary="" >
+		<tbody>
+			<tr>
+				<td>Полное имя</td>
+				<td>Краткое имя(лат.)</td>
+			</tr>
+			<tr>
+				<td><input name="auth_full_name0" type="text" id="auth_full_name" value="Логин"></td>
+				<td><input name="auth_table_name0" type="text" id="auth_table_name" value="login"></td>
+			</tr>
+			<tr class="login_param_last">		
+				<td><input name="auth_full_name1" type="text" id="auth_full_name" value="Пароль"></td>
+				<td><input name="auth_table_name1" type="text" id="auth_table_name" value="pass"></td>
+			</tr><!--
+			<tr>
+				<td><a href="#" onclick="return add_login_param();">Добавить параметр</a></td>
+				<td></td>
+			</tr>-->
+		</tbody>
+	</table>
+</form>
+</div>
+
+<div id="reg_by">.
+<h2>Данные регистрации:</h2>
+<form>
+	<table summary="" >
+		<tbody>
+			<tr>
+				<td>Полное имя</td>
+				<td>Краткое имя(лат.)</td>
+			</tr>
+			<tr>
+				<td><input name="reg_full_name0" type="text" id="reg_full_name" value="Логин"></td>
+				<td><input name="reg_table_name0" type="text" id="reg_table_name" value="login"></td>
+			</tr>
+			<tr class="reg_param_last">		
+				<td><input name="reg_full_name1" type="text" id="reg_full_name" value="Пароль"></td>
+				<td><input name="reg_table_name1" type="text" id="reg_table_name" value="pass"></td>
+			</tr>
+			<tr>
+				<td><a href="#" onclick="return add_reg_param();">Добавить параметр</a></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+</div>
+
+<div id="auth_conf">
+<h2>Прочие параметры:</h2>
+<form>
+	<table summary="" >
+		<tbody>
+	
+			<tr>
+				<td><label>Лого:</label></td>
+				<td><input name="logo" type="file" id="logo_input" onchange="javascript:start_upload();"></td>
+			</tr>
+			<tr>		
+				<td><label>Цвет:</label></td>
+				<td><input name="color" type="text" id="color_input" value="#cfcfcf"></td>
+			</tr>
+			<tr>
+			</tr>
+		</tbody>
+	</table>
+</form>
+Лого размером 380х210 формата jpg
+</div>
+<div id="submit" onclick="submit_forms();">Сгенерировать</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+[07-May-2013 21:20:30 Europe/Helsinki] PHP Parse error:  syntax error, unexpected '=', expecting ')' in /home/freebcom/public_html/managers/card_stat/php/index.php on line 20
+[07-May-2013 22:50:49 Europe/Helsinki] PHP Warning:  require_once(connect.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/freebcom/public_html/managers/card_stat/php/index.php on line 2
+[07-May-2013 22:50:49 Europe/Helsinki] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required 'connect.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/freebcom/public_html/managers/card_stat/php/index.php on line 2
+[08-May-2013 00:42:23 Europe/Helsinki] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/freebcom/public_html/managers/card_stat/php/index.php on line 37
+[08-May-2013 00:42:31 Europe/Helsinki] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/freebcom/public_html/managers/card_stat/php/index.php on line 37
+[08-May-2013 00:44:05 Europe/Helsinki] PHP Parse error:  syntax error, unexpected '[', expecting ')' in /home/freebcom/public_html/managers/card_stat/php/index.php on line 47
+[08-May-2013 01:00:13 Europe/Helsinki] PHP Parse error:  syntax error, unexpected ';' in /home/freebcom/public_html/managers/card_stat/php/index.php on line 47

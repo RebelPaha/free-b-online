@@ -1,0 +1,65 @@
+#login table
+{
+	position: absolute;
+	background-color: #f5f5f5;
+	top: -15px;
+	left: 40%;
+	margin-right: 40%;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+  	-o-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	-ms-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	z-index: 81;
+}
+#progress_bar_div img
+{
+	position: absolute;
+	top: 48%;
+	left: 48%;
+}
+
+#progress_bar_div
+{
+	top: 0px;
+	left: 0px;
+	position: absolute;
+	background-color: #505050;
+	opacity: 0.8;
+	width: 100%;
+	height: 100%;
+}
+
+#vendor_content textarea
+{
+	height: 150px;
+	width: 100%;
+	background-color: #fff;
+}
+
+#lock_screen
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	opacity: 0.8;
+	background-color: #505050;
+	z-index: 80;
+	/*visibility: hidden;*/
+	
+}
+
+#main
+{
+	margin: 30px;
+padding: 10px;
+border: 2px double black;	
+}
+
+body
+{
+	 font: 13px/27px Arial,sans-serif;
+	background-color: #f3f3f3;
+}

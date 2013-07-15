@@ -1,0 +1,56 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^page/([^/]*)$ /?page=$1 [L,QSA]
+RewriteRule ^exit/([^/]*)$ /?exit=$1 [L,QSA]
+RewriteRule ^page/([^/]*)/category/([^/]*)$ /?page=$1&category=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/edit/([^/]*)$ /?page=$1&edit=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/del/([^/]*)$ /?page=$1&del=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/numberpage/([^/]*)$ /?page=$1&numberpage=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/category/([^/]*)/partner/([^/]*)/notify/([^/]*)$ /?page=$1&category=$2&partner=$3&notify=$4 [L,QSA]
+RewriteRule ^page/([^/]*)/category/([^/]*)/notify/([^/]*)$ /?page=$1&category=$2&notify=$3 [L,QSA]
+RewriteRule ^page/([^/]*)/category/([^/]*)/partner/([^/]*)$ /?page=$1&category=$2&partner=$3 [L,QSA]
+#RewriteRule ^category/([^/]*)/partner/([^/]*)$ /?page=4&category=$1&partner=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/chooise/([^/]*)$ /?page=$1&chooise=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/category/([^/]*)/product/([^/]*)$ /?page=$1&category=$2&product=$3 [L,QSA]
+RewriteRule ^page/([^/]*)/id/([^/]*)$ /?page=$1&id=$2 [L,QSA]
+RewriteRule ^page/([^/]*)/cabinet/([^/]*)$ /?page=$1&cabinet=$2 [L,QSA]
+RewriteCond %{HTTP_HOST} ^supershara\.com\.ua$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.supershara\.com\.ua$
+RewriteRule ^/?$ "http\:\/\/free\-b\.com\.ua\/" [R=301,L]
+
+<IfModule mod_expires.c>
+ExpiresActive on
+ExpiresDefault                          "access plus 1 month"
+ExpiresByType text/cache-manifest       "access plus 0 seconds"
+ExpiresByType text/html                 "access plus 0 seconds"
+ExpiresByType text/xml                  "access plus 0 seconds"
+ExpiresByType application/xml           "access plus 0 seconds"
+ExpiresByType application/json          "access plus 0 seconds"
+ExpiresByType application/rss+xml       "access plus 1 month"
+ExpiresByType image/x-icon              "access plus 1 week" 
+ExpiresByType image/gif                 "access plus 1 year"
+ExpiresByType image/png                 "access plus 1 year"
+ExpiresByType image/jpg                 "access plus 1 year"
+ExpiresByType image/jpeg                "access plus 1 year"
+ExpiresByType video/ogg                 "access plus 1 year"
+ExpiresByType audio/ogg                 "access plus 1 year"
+ExpiresByType audio/mp3                 "access plus 1 year"
+ExpiresByType video/mp4                 "access plus 1 year"
+ExpiresByType video/webm                "access plus 1 year"
+ExpiresByType text/x-component          "access plus 1 month"
+ExpiresByType font/truetype             "access plus 1 year"
+ExpiresByType font/opentype             "access plus 1 year"
+ExpiresByType application/x-font-woff   "access plus 1 year"
+ExpiresByType image/svg+xml             "access plus 1 month"
+ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+ExpiresByType text/css                  "access plus 2 months"
+ExpiresByType application/javascript    "access plus 2 months"
+ExpiresByType text/javascript           "access plus 2 months"
+<IfModule mod_headers.c>
+Header append Cache-Control "public"
+</IfModule>
+</IfModule>
+

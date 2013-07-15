@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta http-equiv="expires" content="0">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+//]]>
+</script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+
+<div id="login">
+	<form id="login_form" onsubmit="return submit_login_window();">
+			<table summary="">
+				<tr>
+					<td><label>Логин:</label></td><td><input name="login" type="text"></td><td></td>
+				</tr>
+				<tr>
+					<td><label>Пароль:</label></td><td><input name="pass" type="password"></td><td><input type="submit" value="OK"></td>
+				</tr>
+			</table>	
+	</form>
+</div>
+<div id="lock_screen"></div>
+<h1>Добавление Вендора</h1>
+<div id="main">
+	<div id="vendor_info">
+		<form method="post" action="php/index.php" id="vendor">
+				<table summary="">
+					<tr>
+						<td><label>Название:</label></td><td><input name="ven_name" type="text"></td><td></td>
+					</tr>
+					<tr>
+						<td><label>Категория:</label></td><td><select size="1" name="ven_cat" id="ven_cat"></select></td><td></td>
+					</tr>
+					<tr>
+						<td><label>Адрес:</label></td><td><input name="ven_addr" type="text"></td><td></td>
+					</tr>
+					<tr>
+						<td><label>Телефон:</label></td><td><input name="ven_phone" type="text"></td><td></td>
+					</tr>
+					<tr>
+						<td><label>Сайт вендора:</label></td><td><input name="ven_url" type="text"></td><td></td>
+					</tr>
+					<tr>
+						<td><label>Скидка:</label></td><td><input name="ven_gift" type="text"></td><td></td>
+					</tr>
+					<tr>
+						<td><label>Город:</label></td><td><select size="1" name="ven_city" id="ven_city"></select></td><td></td>
+					</tr>
+					
+					<tr>
+						<td><label>Логотип:</label></td><td><input name="ven_logo" type="file" onchange="javascript:start_upload();"></td><td></td>
+					</tr>						
+				
+				</table>	
+				<div id="vendor_content">
+					<textarea name="content">
+						<h3>Условия скидки:</h3>
+						Скидка 10% скидка на *<br>
+						<hr>
+						<h3>Описание:</h3>
+				</textarea>
+				</div>
+			<input type="submit" value="Отправить">
+		</form>
+	</div>
+</div>
+
+</body>
+</html>

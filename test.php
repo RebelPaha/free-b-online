@@ -1,0 +1,2 @@
+AAA
+<?php echo 'lol'; ?>

@@ -1,0 +1,83 @@
+#main
+{ 
+	 display: table;
+    margin: 0 auto;
+}
+
+#form
+{
+	color: #333333;
+	font: 12px/14px Arial Verdana sans-serif;;
+	position: absolute;
+	height: 90px;
+	padding: 10px 20%;
+	position: relative; 
+   -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: -5px 9px 5px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    -5px 9px 5px rgba(50, 50, 50, 0.75);
+	box-shadow:         -5px 9px 5px rgba(50, 50, 50, 0.75);
+	background-color: <-CSS_BG_COLOR->;
+	z-index: 99;
+}
+
+#err
+{
+	font: 16px/18px Verdana;
+	margin-top: 50px;
+	padding: 10px;
+	background-color: #f08080;
+}
+
+#logo
+{
+	width: 365px;
+	height: 210px;
+	background-image: url("../img/key.jpg");
+	background-repeat: no-repeat;
+}
+
+input:hover
+{
+ border: 2px solid #ff6060; 
+}
+
+a
+{
+	font: 10px/10px Tahoma;
+	color: #333333;
+	text-decoration: none;
+	border-bottom: 1px dashed #333333;	
+}
+
+a:hover
+{
+	color: #0645ad;
+	border-bottom: 1px dashed #0645ad;	
+}
+
+input[type=button]
+{
+	height: 25px;
+	width: 50px;
+}
+
+input
+{
+ border: 1px solid #606060; 
+ border-radius: 3px; 
+ -webkit-border-radius: 3px; 
+ -moz-border-radius: 3px; 
+ -khtml-border-radius: 3px; 
+ background: #ffffff !important; 
+ outline: none; 
+ height: 24px;
+ color: #000;
+ font-size: 12px;
+ font-family: Verdana; 
+}
+
+body
+{
+}

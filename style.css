@@ -1,0 +1,161 @@
+/* CSS Document */
+#bg
+{	top:0px; left:0px; margin:0px; padding:0px;
+height:165px; background:url(image/bg.png) repeat-x;}
+#main
+{
+	top:0px;
+	width:1080px;
+	margin:0px auto;
+}
+#logo
+{
+	background:url(image/logo.png);
+	height:93px;
+	width:538px;
+	float:left;
+}
+
+/* Стили меню ввода логина\пароля */
+#login
+{
+	margin-top:19px;
+	background:url(image/login.png);
+	height:74px;
+	width:320px;
+	float:right;
+}
+
+.password
+{
+	width:100px;
+	border:1px solid #000;
+}
+
+.login
+{
+	width:100px;
+	border:1px solid #000;
+}
+
+.entet_btn
+{
+	background:url(image/enter_btn.png) no-repeat;
+	width:84px;
+	height:24px;
+	color:#F00;
+	padding:0px;
+	margin:0px;
+	border:none;
+}
+
+.registr
+{
+	text-transform:uppercase;
+	color:#FFF;
+	font-size:12px;
+	font-weight:bold;
+}
+
+/* end Стили меню ввода логина\пароля */
+
+/* Стили главного меню*/
+#menu
+{
+	clear:both;
+	width:1080px;
+	height:66px;
+}
+
+.main_menu
+{
+	background:url(image/menu_bg.png) repeat-x;
+	margin:0 8px 0 9px;
+	height:53px;	
+	line-height:53px;
+}
+.menu_left
+{
+	background:url(image/menu_l.png) no-repeat;
+	width:9px;
+	height:53px;
+	float:left;
+}
+
+.menu_right
+{
+	background:url(image/menu_r.png) no-repeat;
+	width:8px;
+	height:53px;
+	float:right;
+}
+
+.menu_div
+{
+	height:53px;
+	width:2px;
+	float:left;
+	background:url(image/menu_div.png) no-repeat;
+}
+
+a.menu_link
+{
+	color:#182b4c;
+	font-weight:bold;
+	font-size:13px;
+	display:block;
+	padding:0px 40px;
+	float:left;
+	text-transform:uppercase;
+	text-decoration:none;
+}
+
+a.menu_link:hover
+{
+	background:url(image/menu_bg2.png) repeat-x;
+	color:#FFF;
+}
+
+.shadow_left
+{
+	height:13px;
+	width:20px;
+	float:left;
+	background:url(image/shadow_left.png) no-repeat;
+}
+
+.shadow_right
+{
+	height:13px;
+	width:19px;
+	float:right;
+	background:url(image/shadow_right.png) no-repeat;
+}
+.shadow_bottom
+{
+	height:13px;
+	margin:0 19px 0 20px;
+	background:url(image/shadow_bottom.png);
+}
+/* END Стили главного меню*/
+
+/* Стили content*/
+#content
+{
+	width: 980px;
+	margin: 0px auto;
+}
+
+#left_content
+{
+	float:left;
+	width:700px;
+}
+
+#right_content
+{
+	float:right;
+	width:260px;	
+}
+
+/* END Стили content*/

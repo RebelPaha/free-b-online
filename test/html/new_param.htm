@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			html, body {  margin: 10px;  padding: 0;  width: 100%;   height: 100%;}
+			input { display: inline-block;}
+			td { text-align: left;}
+			#main_form {   display: inline-block; border: 2px solid black; padding: 10px; width: 450px; vertical-align: middle;}
+			#form_container {  top: 0;  left: 0;  width: 100%;  height: 100%;  text-align: center;}
+			#form_field1 {	border: 2px solid black; padding: 10px; width: 420px;}
+			#form_field2 {	border: 2px solid black; padding: 10px; width: 420px;}
+		</style>
+
+	</head>
+<body>
+	<div id='form_container'>
+		<form id='main_form'>
+			<div id='title_'></div>
+			<p>
+			<div id='field1_title'></div>
+			<fieldset id='form_field1'>
+			</fieldset>
+			<p>
+			<div id='field2_title'></div>
+			<fieldset id='form_field2'>
+				<i> В файле conf.ini надо прописать следующие данные:</i>
+				<p align='left'>[DeviceLink]:<br>
+			</fieldset><br>
+			<div id='button_div'></div><br>
+			<div id='ver'><i> ver. </i></div>
+		</form>
+	</div>
+		<script>
+			var tablerowdata  = [
+			[
+			[192, 168, 0, 140],
+			[255, 255, 255, 0],
+			[192, 168, 0, 1],
+			[100],
+			['00', '01', '04', '00', '00', '01']
+			],
+			[
+			[192, 168, 0, 1],
+			[100]
+			]
+			];
+			var version='1.0';
+			var pow_checked = 1;
+			var selected_axis = [1, 1, 1, 1, 4, 4, 4, 4];
+			var selected_eng = [1, 2, 3, 4, 1, 2, 3, 4];
+			var tablerow = [
+			['IP:', 'Mask:', 'Gate:', 'Port:', 'MAC:'],['host=', 'port=']
+			];
+			var tablerowdatanum = [
+			[4, 4, 4, 1, 6],[4, 1]
+			];
+			var tablerowdatamax = [
+			['3', '3', '3', '5', '2'],['3', '2']
+			];
+			var num_table = 0;
+			var pow_type = ['нет','тяга','закрылки','тормоза','шаг','триммер элероны','триммер высота','триммер направление'];
+			title_.innerHTML='<b>Панель управления  IL-2 by =V=Heromant</b>';
+			field1_title.innerHTML='Сетевые настройки устройства:';
+			field2_title.innerHTML='Настройки Ил-2:';			
+			make_table(5,2,'form_field1');
+			make_table(2,2,'form_field2');
+			document.getElementById('form_field1').innerHTML += '<br>Использовать аналоговые оси';
+			tabdiv2.innerHTML = '<p><i> Данные должны соответствовать настройкам Вашей сетевой карты. Порт любой свободный (например 21100)</i>'
+			set_table(1,5);
+			set_table(2,2);
+			set_value(1,5);
+			set_value(2,2);
+			set_checkbox();
+			set_pow();
+			change_eng('eng1');
+			set_button('button_div', 'Сохранить');
+			ver.innerHTML += '<i>'+version+'</i>';
+			
+			function add_data(id_, num, type_)
+			{
+				var data='';
+				var data_el;
+				for (var i=0; i<num;i++)
+				{
+					var T_object = document.getElementById(id_+i);
+					data += id_+i+'=';
+					(type_) ? data_el = T_object.value : data_el = T_object.selectedIndex;
+					(isNumeric(data_el)) ? data_el = +data_el : data_el = 0;
+					data += data_el;
+					data += '&';
+				}
+				return data
+			}
+			
+			function submit_data_prepare ()
+			{
+				var data;
+				data = '/?';
+				data += add_data('ip1',4,true);
+				data += add_data('mask1',4,true);
+				data += add_data('gate1',4,true);
+				data += add_data('port1',1,true);
+				data += add_data('mac1',6,true);
+ 				data += add_data('host2',4,true);
+				data += add_data('port2',1,true);
+				(ch0.checked) ? data += 'pow=1&' : data += 'pow=0&';
+				data += add_data('pow',8,false);
+				data += add_data('eng',8,false);
+				data = data.slice(0,-1);
+
+				return data;
+			}
+
+			function datatransfer()
+			{
+				var request_data = submit_data_prepare();
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', request_data, true);
+				xhr.onreadystatechange = function() 
+				{
+					if (xhr.readyState != 4) return;
+//					if (xhr.status != 200) 
+//					{
+//						alert('Ошибка'+xhr.status);
+//						return;
+//					}
+					alert(xhr.responseText);
+					alert(request_data);
+				}
+				xhr.send(null);
+			}
+			
+			function isNumeric(n) 
+			{
+				return !isNaN(parseFloat(n)) && isFinite(n);
+			}
+
+			function set_button(id_, data)
+			{
+				var T_object = document.getElementById(id_);
+				var T_button = document.createElement('input');
+				T_button.type = 'button';
+				T_button.value = data;
+				T_object.appendChild(T_button);
+				T_button.setAttribute('onclick','datatransfer()');
+			}
+
+			function set_table(num, rows)
+			{
+				for (var i=0; i<rows; i++)
+				{
+					var cell = document.getElementById(('col'+num)+i+'0');
+					cell.innerHTML = tablerow[num-1][i];
+					var idname=tablerow[num-1][i].slice(0,-1).toLowerCase();
+					cell = document.getElementById(('col'+num)+i+'1');
+					for (var k=0;k<tablerowdatanum[num-1][i];k++)
+					{
+						if (k>0) (tablerowdatanum[num-1][i] == 6) ? cell.innerHTML += ' : ' : cell.innerHTML +=' . ';
+						var Td_inp = document.createElement('input');
+						Td_inp.id = Td_inp.name = idname+num+k;
+						Td_inp.size = '2';
+						if (tablerowdatanum[num-1][i] == 1) Td_inp.size = '3';
+						cell.appendChild(Td_inp);
+						Td_inp.setAttribute('maxlength', tablerowdatamax[num-1][i]);
+					}
+			
+				}
+			}
+			
+			function set_value(num, rows)
+			{
+				for (var i=0; i<rows; i++)
+				{
+					cell = document.getElementById(('col'+num)+i+'1');
+					var k=0;
+					while (k < tablerowdatanum[num-1][i])
+					{
+						cell.children[k].value = tablerowdata[num-1][i][k];
+						k++;
+					}
+				}
+			}
+
+			function make_table(num_row, num_col, object_id)
+			{
+				num_table++;
+				var Row, Column;
+				var T_object = document.getElementById(object_id);
+				var Table = document.createElement('table');
+				Table.id = 'table'+num_table;
+				T_object.appendChild(Table);
+				for (var row=0; row<num_row; row++)
+				{
+					Row = document.createElement('tr');
+					Row.id = ('row'+num_table)+row;
+					Table.appendChild(Row);
+					for (var col=0; col<num_col; col++)
+					{
+						Column = document.createElement('td');
+						Column.id = (('col'+num_table)+row)+col;
+						Row.appendChild(Column);
+					}
+				}
+				var T_div = document.createElement('div');
+				T_div.id = 'tabdiv'+num_table;
+				T_object.appendChild(T_div);
+			}
+			
+
+			function set_checkbox()
+			{
+				var T_checkbox = document.createElement('input');
+				T_checkbox.id = T_checkbox.name = 'ch0';
+				T_checkbox.type = 'checkbox';
+				T_checkbox.setAttribute('onchange', 'change_pow()');
+				if (pow_checked == 1) T_checkbox.setAttribute('checked','true');
+				document.getElementById('form_field1').appendChild(T_checkbox);
+				T_checkbox.setAttribute('value','on');
+			}
+			
+			function set_select(tabnum,colnum,idname,numopt)
+			{
+				for (var i=0;i<8;i++)
+				{
+					var cell = document.getElementById((('col'+tabnum)+i)+colnum);
+					var T_select = document.createElement('select');
+					T_select.id = T_select.name = idname+i;
+					cell.appendChild(T_select);
+					T_select.setAttribute('onchange','change_eng(this.id)');
+					for (var k=0;k<numopt;k++)
+					{
+						var T_options = document.createElement('option');
+						T_options.id = (('opt'+tabnum)+i)+k;
+						T_select.appendChild(T_options);
+						if (colnum == 1) {T_options.innerHTML = pow_type[k]; }
+						else
+						{
+							(k==0) ? T_options.innerHTML = 'нет' : T_options.innerHTML = k;
+							
+						}
+					}
+					(colnum == 1) ? T_select.selectedIndex = selected_axis[i] : T_select.selectedIndex = selected_eng[i];
+					
+				}
+				
+			}
+
+			function set_pow()
+			{
+				var T_object = document.getElementById('form_field1');
+				var T_div = document.createElement('div');
+				T_div.id = 'pow_';
+				T_object.appendChild(T_div);
+				make_table(8,3,'pow_');
+				for (var i=0;i<8;i++)
+				{
+					var cell = document.getElementById(('col3'+i)+'0');
+					cell.innerHTML = i+':';
+				}
+				set_select(3,1,'pow',8);
+				set_select(3,2,'eng',5);
+			}
+			
+			function change_pow()
+			{
+				var T_obj, i;
+				(document.getElementById('ch0').checked) ? pow_.style.display='block' : pow_.style.display='none';
+			}
+			
+			function change_eng(id_)
+			{
+				if (id_.slice(0,-1) == 'pow') document.getElementById('eng'+id_.slice(-1)).selectedIndex = 0;
+				for (var cur_ax_type=1;cur_ax_type<8;cur_ax_type++)
+				{
+					var ax_eqw = false;
+					var eqw_num = 0;
+					var cur_eqw_num = 0;
+					for (var cur_ax_num=0; cur_ax_num<8; cur_ax_num++)
+					{
+						var axis=document.getElementById('pow'+cur_ax_num);
+						if ((axis.selectedIndex == cur_ax_type) && (cur_ax_type != 1) && (cur_ax_type != 4))
+						{
+							ax_eqw = true;
+							eqw_num++;
+						}
+					}
+					for (var cur_ax_num=0; cur_ax_num<8; cur_ax_num++)
+					{
+						var cur_eqw = false;
+						axis=document.getElementById('pow'+cur_ax_num);
+						if (ax_eqw)
+						{
+							if ((axis.selectedIndex == cur_ax_type) && (cur_ax_type != 1) && (cur_ax_type != 4))
+							{
+								cur_eqw = true;
+								cur_eqw_num++;
+							}
+							if (eqw_num > 0)
+							{
+								if (cur_eqw)
+								{
+									if (cur_eqw_num > 1)
+									{
+										axis.selectedIndex = 0;
+										axis.children[cur_ax_type].setAttribute('hidden','true');
+										axis.children[cur_ax_type].setAttribute('disabled','true');
+										axis.children[cur_ax_type].setAttribute('style','display: none');
+									}
+								}
+								else
+								{
+									axis.children[cur_ax_type].setAttribute('hidden','true');
+									axis.children[cur_ax_type].setAttribute('disabled','true');
+									axis.children[cur_ax_type].setAttribute('style','display: none');
+								}
+							}
+						}
+						else
+						{
+							if (axis.children[cur_ax_type].hasAttribute('hidden')) axis.children[cur_ax_type].removeAttribute('hidden');
+							if (axis.children[cur_ax_type].hasAttribute('hidden')) axis.children[cur_ax_type].removeAttribute('disabled');
+							if (axis.children[cur_ax_type].hasAttribute('hidden')) axis.children[cur_ax_type].setAttribute('style','display: block');
+						}
+					}
+				}
+				for (var cur_eng=1;cur_eng<5;cur_eng++)
+				{
+					var eng_power = false;
+					var eng_pitch = false;
+					for (cur_ax_num=0;cur_ax_num<8;cur_ax_num++)
+					{
+						axis = document.getElementById('pow'+cur_ax_num);
+						var engine = document.getElementById('eng'+cur_ax_num);
+						switch (axis.selectedIndex)
+						{
+							case 1:
+								if (engine.selectedIndex == cur_eng) eng_power = true;
+								(eng_power) ?	engine.children[cur_eng].setAttribute('hidden','true') : engine.children[cur_eng].removeAttribute('hidden');
+								(eng_power) ?	engine.children[cur_eng].setAttribute('disabled','true') : engine.children[cur_eng].removeAttribute('disabled');
+								(eng_power) ?	engine.children[cur_eng].setAttribute('style','display: none') : engine.children[cur_eng].setAttribute('style','display: block');
+							break;
+							case 4:
+								if (engine.selectedIndex == cur_eng) eng_pitch = true;
+								(eng_pitch) ?	engine.children[cur_eng].setAttribute('hidden','true') : engine.children[cur_eng].removeAttribute('hidden');
+								(eng_pitch) ?	engine.children[cur_eng].setAttribute('disabled','true') : engine.children[cur_eng].removeAttribute('disabled');
+								(eng_pitch) ?	engine.children[cur_eng].setAttribute('style','dysplay: none') : engine.children[cur_eng].setAttribute('style','display: block');
+						break;
+						}
+					}
+					var cur_eng_power = false;
+					var cur_eng_pitch = false;
+					for (cur_ax_num=0;cur_ax_num<8;cur_ax_num++)
+					{
+						axis = document.getElementById('pow'+cur_ax_num);
+						engine = document.getElementById('eng'+cur_ax_num);
+						switch (axis.selectedIndex)
+						{
+							case 1:
+								if ((eng_power) && (engine.selectedIndex != cur_eng)) 
+								{
+									engine.children[cur_eng].setAttribute('hidden','true');
+									engine.children[cur_eng].setAttribute('disabled','true');
+									engine.children[cur_eng].setAttribute('style','display: none');
+								}
+							break;
+							case 4:
+								if ((eng_pitch) && (engine.selectedIndex != cur_eng)) 
+								{
+									engine.children[cur_eng].setAttribute('hidden','true');
+									engine.children[cur_eng].setAttribute('disabled','true');
+									engine.children[cur_eng].setAttribute('style','display: none');
+								}
+							break;
+							default:
+								engine.selectedIndex = 0;
+								engine.children[cur_eng].setAttribute('hidden','true'); 
+								engine.children[cur_eng].setAttribute('disabled','true'); 
+								engine.children[cur_eng].setAttribute('style','display: none'); 
+						}
+					}
+				}
+				
+			}
+		</script>
+	</body>
+</html>

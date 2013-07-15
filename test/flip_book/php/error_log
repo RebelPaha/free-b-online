@@ -1,0 +1,4 @@
+[13-May-2013 15:14:11 Europe/Helsinki] PHP Parse error:  syntax error, unexpected '{' in /home/freebcom/public_html/test/flip_book/php/index.php on line 5
+[13-May-2013 15:14:20 Europe/Helsinki] PHP Parse error:  syntax error, unexpected '{' in /home/freebcom/public_html/test/flip_book/php/index.php on line 5
+[13-May-2013 15:15:02 Europe/Helsinki] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/freebcom/public_html/test/flip_book/php/index.php on line 16
+[13-May-2013 15:17:59 Europe/Helsinki] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/freebcom/public_html/test/flip_book/php/index.php on line 16
