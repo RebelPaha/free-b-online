@@ -3,6 +3,8 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
+RewriteRule ^brands$ /?page=30 [L,QSA]
+RewriteRule ^brands/([^/]*)$ /?page=30&id=$1 [L,QSA]
 RewriteRule ^page/([^/]*)$ /?page=$1 [L,QSA]
 RewriteRule ^exit/([^/]*)$ /?exit=$1 [L,QSA]
 RewriteRule ^page/([^/]*)/category/([^/]*)$ /?page=$1&category=$2 [L,QSA]
@@ -19,7 +21,7 @@ RewriteRule ^page/([^/]*)/id/([^/]*)$ /?page=$1&id=$2 [L,QSA]
 RewriteRule ^page/([^/]*)/cabinet/([^/]*)$ /?page=$1&cabinet=$2 [L,QSA]
 RewriteCond %{HTTP_HOST} ^supershara\.com\.ua$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.supershara\.com\.ua$
-RewriteRule ^/?$ "http\:\/\/free\-b\.com\.ua\/" [R=301,L]
+RewriteRule ^/?$ "http\:\/\/freebonline\.com\/" [R=301,L]
 
 <IfModule mod_expires.c>
 ExpiresActive on
