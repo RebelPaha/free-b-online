@@ -6,11 +6,14 @@ if( $_SESSION[ 'lvl' ] != 0 ) {
 
 $imgPath = '..' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'certificates' . DIRECTORY_SEPARATOR;
 $action  = isset( $_GET['action'] ) ? $_GET['action'] : null;
+$imgs = array();
 
 if( isset($_GET['id']) ){
     $sql = "SELECT * FROM `certificates_draw` WHERE id = " . (int) $_GET['id'];
     $result = mysql_query( $sql ) or die( mysql_error());
     $data = mysql_fetch_assoc( $result );
+    if (!empty($data['add_files']))
+        $imgs = explode(',', $data['add_files']);
 }
 else {
     $data = array(
@@ -23,10 +26,12 @@ else {
         'descr' => '',
         'active' => '0'
     );
+
 }
 
 if( ($_GET['action'] === 'add') || ($_GET['action'] === 'edit') ){
-
+var_dump($data['file']);
+var_dump($imgs);
 ?>
     <a href="?p=13">Назад к списку сертификатов</a><br><br>
     <form action="?p=13<?php if( !empty( $data['id'] ) ) echo '&id=' . $data['id']; ?>" method="post" enctype="multipart/form-data">
@@ -40,23 +45,41 @@ if( ($_GET['action'] === 'add') || ($_GET['action'] === 'edit') ){
                     </td>
                 </tr>
 
-                <tr>
+                <tr class="image-form">
                     <td valign="top" width="150">Изображение</td>
                     <td valign="top" align="left">
-                        <input type="file" name="img" /><br>
+                        <input class="upload" type="file" name="img" /><br>
                         <?php if( $data['file'] ): ?>
                         <br>
                         <img src="../img/certificates/<?php echo $data['file']; ?>" alt="" /><br>
-                        <strong>Если выберете новый файл, то после сохроанения данное изображение перезапиштеся</strong>
+                        <strong>Если выберете новый файл, то после сохранения данное изображение перезапишеnся</strong>
                         <?php endif; ?>
                         <ul>
                             <li>Баннер на всю ширину - 840x310px;</li>
                             <li>Баннер в половину ширины - 410х310px;</li>
-                            <li>Добступные расширения: jpg, jpeg, png, gif.</li>
+                            <li>Доступные расширения: jpg, jpeg, png, gif.</li>
                         </ul>
                     </td>
                 </tr>
-
+                <?php if (count($imgs) > 0): ?>
+                <?php foreach ($imgs as $k => $img): ?>
+                    <tr>
+                        <td valign="top" width="150">Изображение</td>
+                        <td valign="top" align="left">
+                            <input class="upload" type="file" name="img<?php echo $k + 1; ?>" /><br>
+                            <strong>Если выберете новый файл, то после сохранения данное изображение перезапишеnся</strong>
+                            <?php if( $img ): ?>
+                                <br>
+                                <img src="../img/certificates/<?php echo $img; ?>" alt="" /><br>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <?php endif; ?>
+                <tr>
+                    <td></td>
+                    <td><a href="#" onclick="var elem = $('input.upload:last').clone().attr('name','img' + $('input.upload').length); elem.insertAfter($(this)); return false;">Добавить дополнительное изображение<br></a></td>
+                </tr>
                 <tr>
                     <td valign="top" width="150">Скидка, %</td>
                     <td valign="top" align="left">
@@ -110,23 +133,50 @@ else{
             $fileExt = pathinfo( $_FILES['img']['name'], PATHINFO_EXTENSION );
 
             if( !empty( $data['file'] ) ){
-                $filePath = $data['file'];
-                unlink( $imgPath . $filePath );
+                $img = $data['file'];
+                unlink( $imgPath . $img );
             }
             else {
-                $filePath = md5( $_FILES['img']['name'] . time() ) . '.' . $fileExt;
+                $img = md5( $_FILES['img']['name'] . time() ) . '.' . $fileExt;
             }
 
-            move_uploaded_file( $_FILES['img']['tmp_name'], $imgPath . $filePath );
+            move_uploaded_file( $_FILES['img']['tmp_name'], $imgPath . $img );
         }
         else {
-            $filePath = $data['file'];
+            $img = $data['file'];
         }
+
+        $i = 0;
+        $filePath = array();
+        array_shift($_FILES);
+
+        foreach ($_FILES as $file) {
+            if( is_uploaded_file($file['tmp_name']) ) {
+                $fileExt = pathinfo( $file['name'], PATHINFO_EXTENSION );
+
+                if( !empty( $imgs[$i] ) ){
+                    $filePath[$i] = $imgs[$i];
+                    unlink( $imgPath . $imgs[$i] );
+                }
+                else {
+                    $filePath[$i] = md5( $file['name'] . time() ) . '.' . $fileExt;
+                }
+
+                move_uploaded_file( $file['tmp_name'], $imgPath . $filePath[$i]  );
+            }
+            else {
+                $filePath[] = $imgs[$i];
+            }
+            $i++;
+        }
+
+        $add_imgs = count($filePath) > 0 ? $add_imgs = join(',', $filePath) : '';
 
         if( isset($_GET['id']) ){
             $sql = "UPDATE `certificates_draw` SET
                 name = '" . $_POST['brand'] . "',
-                file = '" . basename( $filePath ) . "',
+                file = '" . basename( $img ) . "',
+                add_files = '" . $add_imgs . "',
                 teaser = '" . $_POST['teaser'] . "',
                 descr = '" . $_POST['descr'] . "',
                 discount = '" . $_POST['discount'] . "',
@@ -142,7 +192,8 @@ else{
             $sql = "INSERT INTO `certificates_draw` VALUES(
             null,
             '" . $_POST['brand'] . "',
-            '" . basename( $filePath ) . "',
+            '" . basename( $img ) . "',
+            '" . $add_imgs . "',
             '" . $_POST['teaser'] . "',
             '" . $_POST['descr'] . "',
             '" . $_POST['discount'] . "',
