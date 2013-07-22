@@ -8,7 +8,7 @@
     ?>
     <div class="feed-item">
         <a href="<?php echo $data['link']; ?>">
-            <img src="/img/banner/<?php echo $data['file']; ?>" alt="<?php echo $data['name']; ?>" />
+            <img src="/img/vendors/<?php echo $data['file']; ?>" alt="<?php echo $data['name']; ?>" />
         </a>
 
         <div class="feed-item-footer">

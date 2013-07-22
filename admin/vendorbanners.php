@@ -4,7 +4,7 @@ if( $_SESSION[ 'lvl' ] != 0 ) {
     exit( 'Недостаточно прав доступа' );
 }
 
-$imgPath = '..' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'banner' . DIRECTORY_SEPARATOR;
+$imgPath = '..' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'vendors' . DIRECTORY_SEPARATOR;
 $action  = isset( $_GET['action'] ) ? $_GET['action'] : null;
 
 if( isset($_GET['id']) ){
@@ -46,7 +46,7 @@ if( ($_GET['action'] === 'add') || ($_GET['action'] === 'edit') ){
                         <input type="file" name="img" /><br>
                         <?php if( $data['file'] ): ?>
                         <br>
-                        <img src="../img/banner/<?php echo $data['file']; ?>" alt="" /><br>
+                        <img src="../img/vendors/<?php echo $data['file']; ?>" alt="" /><br>
                         <strong>Если выберете новый файл, то после сохроанения данное изображение перезапиштеся</strong>
                         <?php endif; ?>
                         <ul>
@@ -179,7 +179,7 @@ else{
         <a href="?p=12&action=edit&id=' . $data['id'] . '">Изменить</a>&nbsp;
         <a href="?p=12&action=delete&id=' . $data['id'] . '"  onclick="return confirm(\'Действительно хотит эту удалить эту запись?\');">Удалить</a>
        </div>
-        <a href="?p=12&action=edit&id=' . $data['id'] . '"><img src="../img/banner/' . $data['file'] . '" /></a>
+        <a href="?p=12&action=edit&id=' . $data['id'] . '"><img src="../img/vendors/' . $data['file'] . '" /></a>
 
         <div class="feed-item-footer">
             <a class="feed-item-name" href="$">' . $data['name'] . '</a>

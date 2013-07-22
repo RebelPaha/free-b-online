@@ -1,9 +1,10 @@
 <?php
-
+var_dump($_POST);
 if( $_SESSION[ 'lvl' ] != 0 ) {
     exit( 'Недостаточно прав доступа' );
 }
 
+include (dirname(__FILE__) . '/image-toolkit/AcImage.php');
 $imgPath = '..' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'certificates' . DIRECTORY_SEPARATOR;
 $action  = isset( $_GET['action'] ) ? $_GET['action'] : null;
 $imgs = array();
@@ -23,15 +24,12 @@ else {
         'name' => '',
         'file' => '',
         'teaser' => '',
-        'descr' => '',
         'active' => '0'
     );
 
 }
 
 if( ($_GET['action'] === 'add') || ($_GET['action'] === 'edit') ){
-var_dump($data['file']);
-var_dump($imgs);
 ?>
     <a href="?p=13">Назад к списку сертификатов</a><br><br>
     <form action="?p=13<?php if( !empty( $data['id'] ) ) echo '&id=' . $data['id']; ?>" method="post" enctype="multipart/form-data">
@@ -52,11 +50,9 @@ var_dump($imgs);
                         <?php if( $data['file'] ): ?>
                         <br>
                         <img src="../img/certificates/<?php echo $data['file']; ?>" alt="" /><br>
-                        <strong>Если выберете новый файл, то после сохранения данное изображение перезапишеnся</strong>
+                        <strong>Если выберете новый файл, то после сохранения данное изображение перезапишется</strong>
                         <?php endif; ?>
                         <ul>
-                            <li>Баннер на всю ширину - 840x310px;</li>
-                            <li>Баннер в половину ширины - 410х310px;</li>
                             <li>Доступные расширения: jpg, jpeg, png, gif.</li>
                         </ul>
                     </td>
@@ -67,11 +63,14 @@ var_dump($imgs);
                         <td valign="top" width="150">Изображение</td>
                         <td valign="top" align="left">
                             <input class="upload" type="file" name="img<?php echo $k + 1; ?>" /><br>
-                            <strong>Если выберете новый файл, то после сохранения данное изображение перезапишеnся</strong>
+                            <strong>Если выберете новый файл, то после сохранения данное изображение перезапишется</strong>
                             <?php if( $img ): ?>
                                 <br>
-                                <img src="../img/certificates/<?php echo $img; ?>" alt="" /><br>
+                                <img src="../img/certificates/preview/<?php echo $img; ?>" alt="" /><br>
                             <?php endif; ?>
+                            <input type="checkbox" name="delete_img<?php echo $k + 1; ?>" />
+                            <label for="delete_img<?php echo $k + 1; ?>">Удалить</label>
+                            <br>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -79,12 +78,6 @@ var_dump($imgs);
                 <tr>
                     <td></td>
                     <td><a href="#" onclick="var elem = $('input.upload:last').clone().attr('name','img' + $('input.upload').length); elem.insertAfter($(this)); return false;">Добавить дополнительное изображение<br></a></td>
-                </tr>
-                <tr>
-                    <td valign="top" width="150">Скидка, %</td>
-                    <td valign="top" align="left">
-                        <input type="text" name="discount" size="3" maxlength="3" value="<?php echo $data['discount']; ?>" />
-                    </td>
                 </tr>
 
                 <tr>
@@ -140,7 +133,20 @@ else{
                 $img = md5( $_FILES['img']['name'] . time() ) . '.' . $fileExt;
             }
 
-            move_uploaded_file( $_FILES['img']['tmp_name'], $imgPath . $img );
+            $fullPath = $imgPath . $img;
+            move_uploaded_file( $_FILES['img']['tmp_name'], $fullPath );
+
+            // resize
+            try {
+                $preview = AcImage::createImage($fullPath);
+                $preview->resizeByWidth(410);
+                unlink( $fullPath );
+                $preview->save($fullPath);
+            }
+            catch (FileNotFoundException $ex)
+            {
+                $ex->getMessage();
+            }
         }
         else {
             $img = $data['file'];
@@ -157,12 +163,29 @@ else{
                 if( !empty( $imgs[$i] ) ){
                     $filePath[$i] = $imgs[$i];
                     unlink( $imgPath . $imgs[$i] );
+                    unlink( $imgPath . 'preview/' . $imgs[$i] );
                 }
                 else {
                     $filePath[$i] = md5( $file['name'] . time() ) . '.' . $fileExt;
                 }
 
-                move_uploaded_file( $file['tmp_name'], $imgPath . $filePath[$i]  );
+                $fullPath = $imgPath . $filePath[$i];
+                move_uploaded_file( $file['tmp_name'], $fullPath  );
+
+                // resizing and creating preview
+                try {
+                    $preview = AcImage::createImage($fullPath);
+                    $preview->resizeByWidth(410);
+                    if (file_exists($fullPath));
+                        unlink($fullPath);
+                    $preview->save($fullPath);
+                    $preview->resizeByWidth(120);
+                    $preview->save($imgPath . 'preview/' .  $filePath[$i]);
+                }
+                catch (FileNotFoundException $ex)
+                {
+                    $ex->getMessage();
+                }
             }
             else {
                 $filePath[] = $imgs[$i];
@@ -179,7 +202,6 @@ else{
                 add_files = '" . $add_imgs . "',
                 teaser = '" . $_POST['teaser'] . "',
                 descr = '" . $_POST['descr'] . "',
-                discount = '" . $_POST['discount'] . "',
                 pos = '" . $_POST['pos'] . "',
                 active = '" . $_POST['active'] . "'
             WHERE id = " . $_GET['id'];
@@ -196,7 +218,6 @@ else{
             '" . $add_imgs . "',
             '" . $_POST['teaser'] . "',
             '" . $_POST['descr'] . "',
-            '" . $_POST['discount'] . "',
             '" . $_POST['pos'] . "',
             '" . $_POST['active'] . "'
         )";
@@ -209,6 +230,10 @@ else{
     }
     elseif( $action === 'delete' ) {
         unlink( $imgPath . $data['file'] );
+        foreach ($imgs as $img) {
+            unlink( $imgPath . $img );
+            unlink( $imgPath . 'preview/' . $img );
+        }
 
         $sql = "DELETE FROM `certificates_draw` WHERE id = " . $data['id'];
 
@@ -237,7 +262,6 @@ else{
         <div class="feed-item-footer">
             <a class="feed-item-name" href="$">' . $data['name'] . '</a>
             <div class="feed-item-descr">' . $data['teaser'] . '</div>
-            <div class="feed-item-discount">-' . $data['discount'] . '%</div>
         </div>
     </div>';
     }

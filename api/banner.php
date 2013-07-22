@@ -14,7 +14,7 @@ switch( $_GET['v'] ){
 }
 ?>
 <a href="javascript:parent.location.href='<?php echo $host;?>'">
-    <img src="<?php echo $host; ?>/img/banner/<?php echo $file; ?>"
+    <img src="<?php echo $host; ?>/img/vendors/<?php echo $file; ?>"
         <?php if( $_GET['width'] ) echo ' width="' . (int) $_GET['width'] . '"'; ?>
         alt="free-B Online - Единая Система Скидок" />
 </a>
