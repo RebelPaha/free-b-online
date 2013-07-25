@@ -32,12 +32,13 @@
     <div style="clear: both;"></div>
     <?php
         }
-    } else { ?>
-        <div class="vender_main">Розыгрыш сертификатов</div>
-    <?php
+    } else {
     $active = isset($_GET['ended']) ? 0 : 1;
+    $title = isset($_GET['ended']) ? 'Прошедшие розыгрыши' : 'Розыгрыши сертификатов';
     $sql = "SELECT * FROM `certificates_draw` WHERE `active` = {$active} ORDER BY pos ASC";
     $result = mysql_query( $sql ) or die( mysql_error() . ' line ' . __LINE__ );
+
+    echo '<div class="vender_main">' . $title . '</div>';
 
     while( $data = mysql_fetch_assoc( $result ) ):
     ?>
