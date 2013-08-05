@@ -1,5 +1,4 @@
 <?php
-var_dump($_POST);
 if( $_SESSION[ 'lvl' ] != 0 ) {
     exit( 'Недостаточно прав доступа' );
 }
@@ -13,6 +12,7 @@ if( isset($_GET['id']) ){
     $sql = "SELECT * FROM `certificates_draw` WHERE id = " . (int) $_GET['id'];
     $result = mysql_query( $sql ) or die( mysql_error());
     $data = mysql_fetch_assoc( $result );
+    $selected = $data['active'] == 0 ? 'selected' : '';
     if (!empty($data['add_files']))
         $imgs = explode(',', $data['add_files']);
 }
@@ -103,8 +103,8 @@ if( ($_GET['action'] === 'add') || ($_GET['action'] === 'edit') ){
                     <td valign="top" width="150">Розыгрыш активен?</td>
                     <td valign="top" align="left">
                         <select name="active">
-                            <option selected value="1">Да</option>
-                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                            <option <?php echo $selected;?> value="0">Нет</option>
                         </select>
                     </td>
                 </tr>
@@ -197,11 +197,11 @@ else{
 
         if( isset($_GET['id']) ){
             $sql = "UPDATE `certificates_draw` SET
-                name = '" . $_POST['brand'] . "',
+                name = '" . mysql_real_escape_string($_POST['brand']) . "',
                 file = '" . basename( $img ) . "',
                 add_files = '" . $add_imgs . "',
-                teaser = '" . $_POST['teaser'] . "',
-                descr = '" . $_POST['descr'] . "',
+                teaser = '" . mysql_real_escape_string($_POST['teaser']) . "',
+                descr = '" . mysql_real_escape_string($_POST['descr']) . "',
                 pos = '" . $_POST['pos'] . "',
                 active = '" . $_POST['active'] . "'
             WHERE id = " . $_GET['id'];
@@ -213,11 +213,11 @@ else{
         else {
             $sql = "INSERT INTO `certificates_draw` VALUES(
             null,
-            '" . $_POST['brand'] . "',
+            '" . mysql_real_escape_string($_POST['brand']) . "',
             '" . basename( $img ) . "',
             '" . $add_imgs . "',
-            '" . $_POST['teaser'] . "',
-            '" . $_POST['descr'] . "',
+            '" . mysql_real_escape_string($_POST['teaser']) . "',
+            '" . mysql_real_escape_string($_POST['descr']) . "',
             '" . $_POST['pos'] . "',
             '" . $_POST['active'] . "'
         )";

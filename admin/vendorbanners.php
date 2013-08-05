@@ -1,5 +1,8 @@
 <?php
-
+if ($_SERVER['REMOTE_ADDR'] == '93.79.190.177') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
 if( $_SESSION[ 'lvl' ] != 0 ) {
     exit( 'Недостаточно прав доступа' );
 }
@@ -123,10 +126,10 @@ else{
 
         if( isset($_GET['id']) ){
             $sql = "UPDATE `banners_main` SET
-                name = '" . $_POST['brand'] . "',
+                name = '" . mysql_real_escape_string($_POST['brand']) . "',
                 file = '" . basename( $filePath ) . "',
-                teaser = '" . $_POST['teaser'] . "',
-                descr = '" . $_POST['descr'] . "',
+                teaser = '" . mysql_real_escape_string($_POST['teaser']) . "',
+                descr = '" . mysql_real_escape_string($_POST['descr']) . "',
                 discount = '" . $_POST['discount'] . "',
                 link = '" . $_POST['link'] . "',
                 pos = '" . $_POST['pos'] . "'
@@ -139,10 +142,10 @@ else{
         else {
             $sql = "INSERT INTO `banners_main` VALUES(
             null,
-            '" . $_POST['brand'] . "',
+            '" . mysql_real_escape_string($_POST['brand']) . "',
             '" . basename( $filePath ) . "',
-            '" . $_POST['teaser'] . "',
-            '" . $_POST['descr'] . "',
+            '" . mysql_real_escape_string($_POST['teaser']) . "',
+            '" . mysql_real_escape_string($_POST['descr']) . "',
             '" . $_POST['discount'] . "',
             '" . $_POST['pos'] . "',
             '" . $_POST['link'] . "'
